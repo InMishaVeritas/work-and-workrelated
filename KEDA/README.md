@@ -26,4 +26,4 @@ enabling sophisticated, event-driven scaling
 - Grosso modo : extension de Kubernetes (controller en +) qui vient se 
 mettre sur HPA, ça donne deux trucs en plus 1. scale sur des metriques custom(scaler) 2. Capacité de scalle à 0
 
-![KEDA Architecture](keda-workflow architecture.png)
+![KEDA Architecture](keda-workflow.png)
