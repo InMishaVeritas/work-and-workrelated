@@ -59,4 +59,13 @@ Avantages:
 2. scale des jobs and scale sur un cron
 3. Scaler custom en plus de ceux supporté nativement.
 
+### USE CASES A TESTER
 
+1. Installation manuelle de KEDA ( helm)
+2. Opensource scaller (prometheus)
+3. Scaller sur autre chose que des messages. (cron?)
+4. Scaller des jobs.
+
+### PRESENTATION
+-> Green Ops
+-> Observability &
