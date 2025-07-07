@@ -51,10 +51,10 @@ cd kind
 cd ..
 
 # Install Run-AI
-echo "Installing Run-AI..."
-cd runai
-./install-runai.sh
-cd ..
+# echo "Installing Run-AI..."
+# cd runai
+# ./install-runai.sh
+# cd ..
 
 # TODO: Add KServe installation
 echo "KServe installation will be added in a future update."

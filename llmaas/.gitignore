@@ -41,3 +41,6 @@ kubeconfig
 *.tmp
 *.bak
 *.swp
+
+#Istio installation
+istio-1.22.8/
