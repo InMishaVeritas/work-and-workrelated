@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: streamlit
+  namespace: kserve-test 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: streamlit
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: streamlit
+    spec:
+      containers:
+      - name: streamlit-prompt
+        image: streamlit:1.0
+        imagePullPolicy: Never
+
+        # USE TO AVOID CACHED IMAGES
+        # imagePullPolicy: Always
+        ports:
+          - containerPort: 8501
