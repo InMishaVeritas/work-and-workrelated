@@ -1,0 +1,8 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongConsumer
+metadata:
+  name: demo-key-consumer
+  # namespace: kserve-test
+username: key-user
+credentials:
+  - demo-key-auth

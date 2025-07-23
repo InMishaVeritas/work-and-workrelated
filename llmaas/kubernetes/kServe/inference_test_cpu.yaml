@@ -12,8 +12,8 @@ spec:
       - name: vllm
         image: emericocto/vllm-cpu:2.0
         command: ["/bin/sh", "-c"]
-        args: ["sleep infinity"]
-
+        # args: ["sleep infinity"]
+        args: ["vllm serve meta-llama/Llama-3.2-1B-Instruct --device cpu --port 8080"]
         resources:
           requests:
             memory: "8Gi"
@@ -24,7 +24,7 @@ spec:
 
 
         # args: [
-        #   "vllm serve meta-llama/Llama-3.2-1B-Instruct --device cpu --port 8080 --host 0.0.0.0"
+        #   "vllm serve meta-llama/Llama-3.2-1B-Instruct --device cpu --port 8080"
         # ]
         env:
           - name: HUGGING_FACE_HUB_TOKEN
