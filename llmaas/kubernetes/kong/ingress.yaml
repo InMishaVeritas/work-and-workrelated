@@ -1,20 +1,44 @@
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: llama-inference-kong
+#   namespace: kserve-test
+#   annotations:
+#     # konghq.com/plugins: key-auth
+# spec:
+#   ingressClassName: kong
+#   rules:
+#     - host: llama.demo.cluster
+#       http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: llama-3-2-1b-instruct-predictor-00001
+#                 port:
+#                   number: 80
+
+# kong-ingress.yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: llama-inference-kong
-  # namespace: kserve-test
-  annotations:
-    konghq.com/plugins: key-auth
+ name: llm-inference-kong
+ namespace: kserve-test
+ annotations:
+   konghq.com/strip-path: "false"
+   konghq.com/plugins: key-auth    # Plugin names referenced in KongPlugin resources
+   kubernetes.io/ingress.class: kong
+   konghq.com/methods: "GET, POST"  
 spec:
-  ingressClassName: kong
-  rules:
-    - host: llama.demo.cluster
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: llama-3-2-1b-instruct-predictor-00001
-                port:
-                  number: 80
+ ingressClassName: kong
+ rules:
+   - http:
+       paths:
+         - path: /
+           pathType: Prefix
+           backend:
+             service:
+               name: llama-3-2-1b-instruct-predictor-00001-private # Name of your K8s Service
+               port:
+                 number: 80  # Port exposed by your Service

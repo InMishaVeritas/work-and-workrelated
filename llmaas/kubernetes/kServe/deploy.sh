@@ -21,8 +21,7 @@ istioctl install -y
 echo "Installation de Cert Manager..."
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.2/cert-manager.yaml
 
-echo "En attente de lancement d'Istio pour l'install de kServe 
-sleep 5
+
 # 4. Installer KServe
 echo "Installation de KServe..."
 kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.11.2/kserve.yaml

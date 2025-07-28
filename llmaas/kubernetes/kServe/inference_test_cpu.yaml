@@ -8,6 +8,7 @@ spec:
     maxReplicas: 1
     annotations:
       serving.knative.dev/progress-deadline: "1800s"
+      # "sidecar.istio.io/inject": "true"
     containers:
       - name: vllm
         image: emericocto/vllm-cpu:2.0
