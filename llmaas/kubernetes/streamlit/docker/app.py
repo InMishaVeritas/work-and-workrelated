@@ -6,6 +6,14 @@ st.set_page_config(page_title="Chat LLM - Streaming", page_icon="🤖")
 
 st.title("🦙 Interface Universelle LLM (OpenAI/vLLM-compatible)")
 
+def parse_headers(headers_raw):
+    headers = {}
+    for line in headers_raw.splitlines():
+        if ":" in line:
+            k, v = line.split(":", 1)
+            headers[k.strip()] = v.strip()
+    return headers
+
 def stream_openai_response(response):
     """
     Générateur pour extraire chaque morceau de texte du flux streaming OpenAI/vLLM.
@@ -29,7 +37,10 @@ st.markdown("#### Paramètres du backend LLM")
 
 with st.form("params"):
     endpoint = st.text_input("URL du endpoint OpenAI", value="http://llama-3-2-1b-instruct-predictor-00001.kserve-test.svc.cluster.local:80/v1/chat/completions")
-    api_key = st.text_input("OpenAI API Key (ou clé dummy si aucun auth requis)", type="password")
+    headers_input = st.text_area(
+        "Headers HTTP personnalisés (format: clé: valeur, un par ligne)",
+        value="Authorization: Bearer ..."
+    )
     model = st.text_input("Nom du modèle", value="meta-llama/Llama-3.2-1B-Instruct")
     max_tokens = st.number_input("Nombre de tokens max.", min_value=1, value=512)
     temperature = st.slider("Température", min_value=0.0, max_value=2.0, value=1.0)
@@ -45,10 +56,8 @@ if user_input:
     st.session_state.chat_history.append({"role": "user", "content": user_input})
 
     # Headers et payload
-    headers = {
-        "Authorization": f"Bearer {api_key}" if api_key else "",
-        "Content-Type": "application/json"
-    }
+    headers = parse_headers(headers_input)
+    headers["Content-Type"] = "application/json"
     payload = {
         "model": model,
         "messages": [
@@ -97,6 +106,18 @@ if user_input:
         if assistant_resp:
             st.session_state.chat_history.append({"role": "assistant", "content": assistant_resp})
 
+# Darkmode/claire adaptatif
+DARKMODE = st.get_option("theme.base") == "dark"
+
+def get_bubble_style(role):
+    if role == "user":
+        bg = '#2b6cb0' if DARKMODE else '#cceafd'    # bleu foncé ou bleu pâle
+        fg = 'white' if DARKMODE else 'black'
+    else:
+        bg = '#3a3a3a' if DARKMODE else '#f5f5f5'    # gris foncé ou gris clair
+        fg = 'white' if DARKMODE else 'black'
+    return f"background-color:{bg};color:{fg};padding:12px 12px 12px 16px;border-radius:7px;margin-bottom:8px;"
+
 # Affichage rétroactif du fil de discussion
 if st.session_state.chat_history:
     st.divider()
@@ -105,7 +126,8 @@ if st.session_state.chat_history:
         t = "user" if m["role"] == "user" else "assistant"
         icon = "🧑‍💻" if t == "user" else "🤖"
         st.markdown(f"**{icon} {t.capitalize()} :**")
+        bubble_style = get_bubble_style(t)
         st.markdown(
-            f"<div style='background-color:{'#cceafd' if t=='user' else '#f5f5f5'};padding:12px 12px 12px 16px;border-radius:7px;margin-bottom:8px;'>{m['content']}</div>",
+            f"<div style='{bubble_style}'>{m['content']}</div>",
             unsafe_allow_html=True
         )

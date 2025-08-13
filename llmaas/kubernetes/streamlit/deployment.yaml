@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
       - name: streamlit-prompt
-        image: streamlit:1.0
-        imagePullPolicy: Never
+        image: emericocto/vllm-cpu:streamlit1.1
+        #imagePullPolicy: Never
 
         # USE TO AVOID CACHED IMAGES
         # imagePullPolicy: Always

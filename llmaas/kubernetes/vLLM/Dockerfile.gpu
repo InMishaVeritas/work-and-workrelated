@@ -3,11 +3,5 @@ FROM vllm/vllm-openai:latest
 # (Optionnel) Installer des dépendances supplémentaires
 RUN pip install huggingface_hub
 
-# Définir le endpoint Artifactory (à surcharger lors du run si besoin)
-ENV HF_ENDPOINT=https://monendpoint/llm.zip
+CMD ["/bin/bash"]
 
-# (Optionnel) Ajouter un script de démarrage custom
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]

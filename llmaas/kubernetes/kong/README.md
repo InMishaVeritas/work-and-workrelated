@@ -34,3 +34,5 @@ On se servira de tout ça pour envoyer nos requettes curl nodeIP:NodePort (ex 17
 ```
 ./deploy_kong.sh
 ```
+
+172.18.0.2:30913
