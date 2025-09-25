@@ -7,9 +7,11 @@ This project sets up a local Kubernetes environment using Kind (Kubernetes in Do
 The project deploys:
 
 1. **Kind Cluster**: A local Kubernetes cluster with one control-plane node and three worker nodes
-2. **Run-AI**: AI workload orchestration platform for managing GPU resources
+2. **Run-AI**: AI workload orchestration platform for managing GPU resources (DEPRECATED)
 3. **KServe**: Serverless inference platform for machine learning models
 4. **vLLM**: High-performance inference engine for LLMs
+5. **kong api gateway**: API key authentification and ingress to control vLLM access
+6. **Streamlit**: User Interface to test the inference server 
 
 ## Prerequisites
 

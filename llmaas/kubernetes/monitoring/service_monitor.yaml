@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: kserve-vllm-monitor
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: llama-3-2-1b-instruct-predictor-00001
+      networking.internal.knative.dev/serviceType: Private
+  endpoints:
+  - port: "80"
+    path: /metrics
+  namespaceSelector:
+    matchNames:
+      - kserve-test
