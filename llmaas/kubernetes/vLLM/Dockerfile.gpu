@@ -1,0 +1,7 @@
+FROM vllm/vllm-openai:latest
+
+# (Optionnel) Installer des dépendances supplémentaires
+RUN pip install huggingface_hub
+
+CMD ["/bin/bash"]
+

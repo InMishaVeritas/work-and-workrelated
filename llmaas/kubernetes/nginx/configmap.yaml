@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-ingress-controller
+  namespace: ingress-nginx
+data:
+  allow-snippet-annotations: "true"
+  annotations-risk-level: "Critical"   # Ajoute cette ligne
+  http-snippet: |
+    map $http_apikey $api_key_owner {
+      default "";
+      "key_A" "key_owner_A";
+      "key_B" "key_owner_B";
+    }

@@ -1,0 +1,33 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: llama-3-2-1b-instruct
+spec:
+  predictor:
+    minReplicas: 1  # scale-to-zero activé
+    maxReplicas: 1
+    containers:
+      - name: vllm
+        image: vllm-cpu:latest
+        command:
+          - "vllm serve"
+        args:
+          - "--model"
+          - "meta-llama/Llama-3.2-1B-Instruct"
+          - "--port"
+          - "8000"
+        env:
+          - name: HUGGING_FACE_HUB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: hf-token-secret
+                key: token
+        ports:
+          - containerPort: 8000
+        # volumeMounts:
+        #   - name: cache-volume
+        #     mountPath: /root/.cache/huggingface
+    # volumes:
+    #   - name: cache-volume
+    #     persistentVolumeClaim:
+    #       claimName: vllm-models

@@ -1,0 +1,22 @@
+FROM nvidia/cuda:12.4.1-cudnn8-runtime-ubuntu22.04
+
+# Installer dépendances système et Python
+RUN apt-get update && \
+    apt-get install -y git python3 python3-pip && \
+    pip3 install --upgrade pip
+
+# Installer vLLM et huggingface_hub
+RUN pip3 install vllm huggingface_hub
+
+# Dossier où les modèles seront stockés (à monter via PV sur k8s)
+ENV MODEL_DIR=/models
+
+# Ajout du script d'entrypoint
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Exposer le port par défaut de vLLM (modifiable)
+EXPOSE 8000
+
+ENTRYPOINT ["/entrypoint.sh"]
+

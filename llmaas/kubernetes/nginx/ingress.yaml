@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mon-api-ingress
+  namespace: kserve-test
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      if ($api_key_owner != "key_owner_A") { return 401; }
+spec:
+  rules:
+    - host: llama.demo.cluster
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: llama-3-2-1b-instruct-predictor-00001-private
+                port:
+                  number: 80

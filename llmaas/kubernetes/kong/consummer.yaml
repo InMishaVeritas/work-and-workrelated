@@ -1,0 +1,22 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongConsumer
+metadata:
+  name: demo-key-consumer
+  # namespace: kserve-test
+username: key-user
+credentials:
+  - demo-key-auth
+
+
+# kong-consumer.yaml
+apiVersion: configuration.konghq.com/v1
+kind: KongConsumer
+metadata:
+ name: cogip            # Unique name for this consumer
+ namespace: kserve-test
+ annotations:
+  kubernetes.io/ingress.class: kong
+username: test               # Username for this consumer
+custom_id: test             # Unique ID for this consumer
+credentials:
+ - cogip                  # Name of the Secret containing the API key
